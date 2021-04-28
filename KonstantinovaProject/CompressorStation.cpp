@@ -13,7 +13,7 @@ CompressorStation::CompressorStation()
 CompressorStation::CompressorStation(std::ifstream& fin)
 {
 	fin.ignore();
-	getline(fin, Name);
+	std::getline(fin, Name);
 	fin >> ShopsCount
 		>> WorkingShopsCount
 		>> Efficiency;

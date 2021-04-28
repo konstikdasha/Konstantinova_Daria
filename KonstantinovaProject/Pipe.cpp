@@ -19,6 +19,7 @@ Pipe::Pipe(std::ifstream& fin)
 		>> outCsId
 		>> inCsId;
 }
+
 int Pipe::GetProductivity() const
 {
 	return round(sqrt(pow(Diameter, 5) / Length) / 200);
