@@ -90,7 +90,8 @@ std::istream& operator>>(std::istream& in, CompressorStation& cs)
 	std::getline(std::cin, cs.Name);
 	TryInput(cs.ShopsCount, "Введите общее кол-во цехов: ");
 	TryInput(cs.WorkingShopsCount, "Введите кол-во работающих цехов: ");
-	while (cs.WorkingShopsCount > cs.ShopsCount) {
+	while (cs.WorkingShopsCount > cs.ShopsCount) 
+	{
 		std::cout << "Ошибка! Кол-во работающих цехов не может быть больше общего кол-ва цехов\n";
 		TryInput(cs.WorkingShopsCount, "Пожалуйста, введите корректное кол-во работающих цехов: ");
 	}
