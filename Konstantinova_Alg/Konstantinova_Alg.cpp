@@ -24,7 +24,14 @@ bool SearchByName(const CKC& k, string name)
 
 bool SearchByPercent(const CKC& kv, double param)
 {
-	return ((1.0f / kv.Getkolvo_tsehov()) * kv.Getkolvo_tsehov_v_rabote()) <= param;
+
+	return ((1.0 / kv.Getkolvo_tsehov()) * kv.Getkolvo_tsehov_v_rabote())*100 <= param;
+	/*float effektiv = kv.Geteffektivnost();
+	float kolvo = kv.Getkolvo_tsehov();
+	float kolvorab = kv.Getkolvo_tsehov_v_rabote();
+	float ppp = ((1 / kolvo) * kolvorab);
+
+	return effektiv <= ppp;*/
 }
 
 template <typename W, typename T>
@@ -57,59 +64,58 @@ int GetId(const unordered_map<int, T>& mapp)
 	int id;
 	while (true)
 	{
-		cout << "Введите id (больше 0): ";
 		cin >> id;
 		if (id == 0)
 		{
-			cout << endl << "Выход..." << endl;
+			cout << endl << "Выход.." << endl;
 			return -1;
 		}
 		else if (mapp.count(id))
 		{
 			return id;
 		}
-		cout << endl << "Такого id нет. Введите ещё раз" << endl;
+		cout << endl << "Такого id нет.." << endl << "Введите id (больше 0): ";
 	}
 }
-
-void EditPackPipeline(unordered_map<int, Cpipe>& pv)
-{
-	cout << "Выберите" << endl;
-	cout << "\n1. Трубы в работе \n2. Трубы в ремонте \n3. По ID ";
-	switch (Utility::proverka(1, 3))
-	{
-	case 1:
-	{
-		for (int i : FindItemsByFilter(pv, SearchByRepair, 0))
-			pv.find(i)->second.RedaktPipeline();
-	}
-
-	case 2:
-	{
-		for (int i : FindItemsByFilter(pv, SearchByRepair, 1))
-			pv.find(i)->second.RedaktPipeline();
-	}
-
-	case 3:
-	{
-		vector<int> v;
-		while (1)
-		{
-			cout << "Введите id, который хотите отредактировать: ";
-			v.push_back(Utility::proverka(1, Cpipe::MaxId));
-			cout << "Хотите ли вы отредактировать что-либо еще? " << endl << "\t0. Да \n1. Нет ";
-			if (Utility::proverka(0, 1) == 1)
-				break;
-		}
-		for (auto i : v)
-		{
-			if (pv.find(i) != pv.end())
-				pv.find(i)->second.RedaktPipeline();
-		}
-		break;
-	}
-	}
-}
+//
+//void EditPackPipeline(unordered_map<int, Cpipe>& pv)
+//{
+//	cout << "Выберите" << endl;
+//	cout << "\n1. Трубы в работе \n2. Трубы в ремонте \n3. По ID ";
+//	switch (Utility::proverka(1, 3))
+//	{
+//	case 1:
+//	{
+//		for (int i : FindItemsByFilter(pv, SearchByRepair, 0))
+//			pv.find(i)->second.RedaktPipeline();
+//	}
+//
+//	case 2:
+//	{
+//		for (int i : FindItemsByFilter(pv, SearchByRepair, 1))
+//			pv.find(i)->second.RedaktPipeline();
+//	}
+//
+//	case 3:
+//	{
+//		vector<int> v;
+//		while (1)
+//		{
+//			cout << "Введите id, который хотите отредактировать: ";
+//			v.push_back(Utility::proverka(1, Cpipe::MaxId));
+//			cout << "Хотите ли вы отредактировать что-либо еще? " << endl << "\t0. Да \n1. Нет ";
+//			if (Utility::proverka(0, 1) == 1)
+//				break;
+//		}
+//		for (auto i : v)
+//		{
+//			if (pv.find(i) != pv.end())
+//				pv.find(i)->second.RedaktPipeline();
+//		}
+//		break;
+//	}
+//	}
+//}
 
 void DelPipes(unordered_map<int, Cpipe>& pipes_p)
 {
@@ -165,11 +171,11 @@ void PrintMenu()
 		<< "10. Удалить КС" << endl
 		<< "11. Соединить трубу" << endl
 		<< "12. Вывести сеть" << endl
-		<< "13. Топоологическая сортировка" << endl
+		<< "13. Топологическая сортировка" << endl
 		<< "14. Найти максимальный поток" << endl
 		<< "15. Найти кратчайшие пути" << endl
 		<< "0. Выход" << endl
-		<< endl << "Выберите действие - ";
+		<< endl << "Выберите действие - " ;
 }
 
 int main()
@@ -252,7 +258,7 @@ int main()
 		{
 			if (kv.size() > 0)
 			{
-				cout << "Введите ID KC, которую вы хотите изменить: ";
+				cout << "Введите ID, который вы хотите изменить: ";
 				int k = GetId(kv);
 				if (k != -1)
 					kv[k].RedaktKC();
@@ -343,15 +349,15 @@ int main()
 
 		case 8:
 		{
-			cout << "Выберите: \n1. Трубы \n2. KC \n";
+			cout << "Выберите по какому объекту будет поиск: \n1. Трубы \n2. KC \n";
 
 			if (Utility::proverka(1, 2) == 1)
 			{
-				cout << "\nВыберите статус: \n1. В работе \n2. Не в работе \n";
+				cout << "\nКакой статус трубы Вас интересует: \n1. Находится в ремонте \n2. Не нуждается в ремонте \n";
 
 				if (Utility::proverka(1, 2) == 1) 
 				{
-					for (int i : FindItemsByFilter(pv, SearchByRepair, TRUE))
+					for (int i : FindItemsByFilter(pv, SearchByRepair, 1))
 					{
 						cout << "Труба " << i << ".\n";
 						cout << pv[i];
@@ -370,7 +376,7 @@ int main()
 
 			else
 			{
-				cout << "\nВыберите по какому фильтру будет поиск КС: \n1. По имени \n2. Процент незадействованных цехов в работе (покажутся КС с процентом меньше указанного) \n";
+				cout << "\nВыберите по какому фильтру будет поиск КС: \n1. По имени \n2. По проценту незадействованных цехов в работе (будут выведены КС с процентом меньше указанного) \n";
 
 				if (Utility::proverka(1, 2) == 1)
 				{
@@ -381,10 +387,12 @@ int main()
 					for (int i : FindItemsByFilter(kv, SearchByName, name))
 						cout << kv[i + 1];
 				}
+
+
 				else
 				{
 					cout << "\nВведите процент: ";
-					for (int i : FindItemsByFilter(kv, SearchByPercent, Utility::proverka(0.00, 100.0)))
+					for (int i : FindItemsByFilter(kv, SearchByPercent, Utility::proverka(0.00, 100.00)))
 						cout << kv[i + 1];
 				}
 			}
@@ -410,9 +418,9 @@ int main()
 				int id = GetId(pv);
 				if (id != -1)
 				{
-					cout << "КС откуда выходит труба: ";
+					cout << "Из какой КС выходит труба: ";
 					int in = GetId(kv);
-					cout << "КС куда входит труба: ";
+					cout << "В какую КС входит труба: ";
 					int out = GetId(kv);
 					if (in != out)
 						pv[id].Svyazat(in, out);

@@ -8,12 +8,11 @@ bool priznak;
 int out;
 int in;
 
-
 Cpipe::Cpipe()
 {
 	dlina = 0;
 	diametr = 0;
-	priznak = false;
+	priznak = 0;
 	out = -1;
 	in = -1;
 }
@@ -78,12 +77,12 @@ float Cpipe::Getdiametr() const
 
 string Cpipe::checkRepair() const
 {
-	return (priznak) ? "Не в работе \n" : "В работе \n";
+	return (priznak) ? "В ремонте \n" : "Не в ремонте \n";
 }
 
 void Cpipe::RedaktPipeline()
 {
-	cout << "0. Труба в работе \n1. Труба не в работе \nВыберите - ";
+	cout << "0. Труба не нуждается в ремонте \n1. Труба находится в ремонте \nВыберите - ";
 	int choice = Utility::proverka(0, 1);
 	priznak = choice;
 	cout << endl;
@@ -94,9 +93,9 @@ ostream& operator<<(std::ostream& out, const Cpipe& p)
 	out << endl << "Длина: " << p.dlina << endl;
 	out << "Диаметр: " << p.diametr << endl;
 	if (p.priznak)
-		out << " Находится в ремонте" << '\n';
+		out << "Находится в ремонте" << '\n';
 	else
-		out << " Не нуждается в ремонте" << '\n';
+		out << "Не нуждается в ремонте" << '\n';
 	return out;
 }
 
@@ -104,21 +103,21 @@ istream& operator>>(istream& in, Cpipe& p)
 {
 	cout << "Введите длину(м): ";
 	p.dlina = Utility::proverka<double>(0, 1000);
-	std::cout << "\nВведите диаметр(см): ";
+	std::cout << "Введите диаметр(см): ";
 	p.diametr = Utility::proverka<double>(1, 1000);
 	cout << endl;
 	return in;
 }
 
 
-void EditAllPipes(unordered_map<int, Cpipe>& pipes)
-{
-	cout << "0. Труба в работе \n1. Труба не в работе \nВыберите - ";
-	int choice = Utility::proverka(0, 1);
-	cout << endl;
-	for (auto& i : pipes)
-	{
-		i.second.priznak = choice;
-	}
-
-}
+//void EditAllPipes(unordered_map<int, Cpipe>& pipes)
+//{
+//	cout << "0. Труба в работе \n1. Труба не в работе \nВыберите - ";
+//	int choice = Utility::proverka(0, 1);
+//	cout << endl;
+//	for (auto& i : pipes)
+//	{
+//		i.second.priznak = choice;
+//	}
+//
+//}

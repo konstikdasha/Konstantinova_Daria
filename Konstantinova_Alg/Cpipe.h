@@ -28,7 +28,7 @@ public:
 	void RedaktPipeline();
 	friend std::ostream& operator << (ostream& out, const Cpipe& p);
 	friend std::istream& operator >> (istream& in, Cpipe& p);
-	friend void EditAllPipes(unordered_map<int, Cpipe>& pipes);
+	//	friend void EditAllPipes(unordered_map<int, Cpipe>& pipes);
 	void Svyazat(int out, int in);
 	bool CanIspolzovat() const;
 	void ShowSvyaz(int id) const;

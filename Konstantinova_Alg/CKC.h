@@ -23,7 +23,7 @@ public:
 	int Getkolvo_tsehov() const;
 	int Getkolvo_tsehov_v_rabote() const;
 	float Geteffektivnost() const;
-	friend void EditAllKC(unordered_map<int, CKC>& cs);
+//	friend void EditAllKC(unordered_map<int, CKC>& cs);
 	void RedaktKC();
 	CKC();
 	CKC(std::ifstream& fin);

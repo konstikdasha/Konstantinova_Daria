@@ -117,6 +117,7 @@ int bfs(int start, int end, vector<int>& pometki, vector<int>& pred, vector<int>
 		return 0;
 	else return 1;
 }
+
 int seti::FindMaxPotok(int start, int end)
 {
 	int nachalo, konec;
@@ -151,12 +152,14 @@ int seti::FindMaxPotok(int start, int end)
 	}
 	return maxpotok;
 }
+
 void PrintPut(int* t, int start, int vertex, unordered_map<int, int> indexVershin)
 {
 	if (vertex != start)
 		PrintPut(t, start, t[vertex], indexVershin);
 	cout << indexVershin[vertex] << ' ';
 }
+
 void seti::FindKratchaishiPut(int start, unordered_map<int, int> indexVershin)
 {
 	int N = rebra.size();

@@ -23,44 +23,45 @@ CKC::CKC(std::ifstream& fin)
 
 istream& operator>>(std::istream& in, CKC& cs)
 {
-	std::cout << "Введите имя КС n - \n";
+	std::cout << "Введите имя КС - \n";
 	std::cin.ignore();
 	std::getline(cin, cs.name);
-	cout << "Введите общее число цехов - \n";
+	cout << "Введите общее количество цехов - \n";
 	cs.kolvo_tsehov = Utility::proverka(0, 1000);
-	cout << "Введите число цехов в работе - \n";
+	cout << "Введите количество цехов в работе - \n";
 	cs.kolvo_tsehov_v_rabote = Utility::proverka(0, cs.kolvo_tsehov);
 	cs.effektivnost = (1.0f / cs.kolvo_tsehov) * cs.kolvo_tsehov_v_rabote;
 
 	return in;
 }
+
 ostream& operator<<(std::ostream& out, const CKC& cs)
 {
 	out << "\n" << "Имя: " << cs.name << "\n"
-		<< "Кол-во работающих цехов: " << cs.kolvo_tsehov_v_rabote << "/" << cs.kolvo_tsehov << endl
+		<< "Отношение кол-ва работающих цехов к неработающим: " << cs.kolvo_tsehov_v_rabote << "/" << cs.kolvo_tsehov << endl
 		<< "Эффективность: " << cs.effektivnost << endl;
 	return out;
 
 }
 
-void EditAllKC(unordered_map<int, CKC>& cs)
-{
-	cout << "\n0. Запустить цеха \n1. Остановить цеха \nВыберите - ";
-	int choice = Utility::proverka(0, 1);
-	cout << endl;
-	for (auto& i : cs)
-	{
-		if (choice == 0 && (i.second.kolvo_tsehov > i.second.kolvo_tsehov_v_rabote))
-		{
-			i.second.kolvo_tsehov_v_rabote += 1;
-		}
-		else if (i.second.kolvo_tsehov_v_rabote > 0)
-		{
-			i.second.kolvo_tsehov_v_rabote -= 1;
-		}
-	}
-
-}
+//void EditAllKC(unordered_map<int, CKC>& cs)
+//{
+//	cout << "\n0. Запустить цеха \n1. Остановить цеха \nВыберите - ";
+//	int choice = Utility::proverka(0, 1);
+//	cout << endl;
+//	for (auto& i : cs)
+//	{
+//		if (choice == 0 && (i.second.kolvo_tsehov > i.second.kolvo_tsehov_v_rabote))
+//		{
+//			i.second.kolvo_tsehov_v_rabote += 1;
+//		}
+//		else if (i.second.kolvo_tsehov_v_rabote > 0)
+//		{
+//			i.second.kolvo_tsehov_v_rabote -= 1;
+//		}
+//	}
+//
+//}
 
 void CKC::Save(ofstream& fout)
 {
@@ -95,12 +96,12 @@ int CKC::Getkolvo_tsehov_v_rabote() const
 
 float CKC::Geteffektivnost() const
 {
-	return effektivnost;
+	return ((kolvo_tsehov * 1.0f / kolvo_tsehov_v_rabote)) * 100;
 }
 
 void CKC::RedaktKC()
 {
-	cout << "\n0. Начать работу цеха\n1. Остановить работу цеха\nВыбор - ";
+	cout << "\n0. Начать работу цеха \n1. Остановить работу цеха \nВыбор - ";
 	if (Utility::proverka(0, 1) == 0)
 	{
 		if (kolvo_tsehov > kolvo_tsehov_v_rabote)
